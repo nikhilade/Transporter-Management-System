@@ -4,6 +4,8 @@ import VehicleDriverAssignment from "../sections/VehicleDriverAssignment";
 import DispatchOrders from "../sections/DispatchOrders";
 import AlertsNotifications from "../sections/AlertNotifications";
 import RoutePerformanceReports from "../sections/RoutePerformanceReport";
+import AddVehicleModal from "../sections/AddVehicleModal";
+import AddDriverModal from "../sections/AddDriverModal";
 
 export interface Vehicle {
   id: number;
@@ -53,6 +55,10 @@ const DispatchRoutesPage: React.FC = () => {
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [dispatchOrders, setDispatchOrders] = useState<DispatchOrder[]>([]);
   const [alerts, setAlerts] = useState<Alert[]>([]);
+
+  // Modal states
+  const [vehicleModalOpen, setVehicleModalOpen] = useState(false);
+  const [driverModalOpen, setDriverModalOpen] = useState(false);
 
   useEffect(() => {
     setVehicles([
@@ -121,11 +127,27 @@ const DispatchRoutesPage: React.FC = () => {
         </div>
 
         <RoutePlanning routes={routes} setRoutes={setRoutes} vehicles={vehicles} drivers={drivers} />
-        <VehicleDriverAssignment vehicles={vehicles} drivers={drivers} />
+
+        <VehicleDriverAssignment
+          vehicles={vehicles}
+          drivers={drivers}
+        />
+
         <DispatchOrders dispatchOrders={dispatchOrders} />
         <AlertsNotifications alerts={alerts} />
         <RoutePerformanceReports />
       </div>
+
+      {/* Modals (just open/close UI, no adding functionality) */}
+      <AddVehicleModal
+        open={vehicleModalOpen}
+        onClose={() => setVehicleModalOpen(false)}
+      />
+
+      <AddDriverModal
+        open={driverModalOpen}
+        onClose={() => setDriverModalOpen(false)}
+      />
     </div>
   );
 };
